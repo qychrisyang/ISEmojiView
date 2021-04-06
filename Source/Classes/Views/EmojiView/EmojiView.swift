@@ -16,6 +16,7 @@ public protocol EmojiViewDelegate: class {
     func emojiViewDidSelectEmoji(_ emoji: String, emojiView: EmojiView)
     func emojiViewDidPressChangeKeyboardButton(_ emojiView: EmojiView)
     func emojiViewDidPressDeleteBackwardButton(_ emojiView: EmojiView)
+    func emojiViewDidPressReturnButton(_ emojiView: EmojiView)
     func emojiViewDidPressDismissKeyboardButton(_ emojiView: EmojiView)
     
 }
@@ -66,15 +67,38 @@ final public class EmojiView: UIView {
         }
     }
     
-    @IBInspectable private var needToShowAbcButton: Bool = false {
+    @IBInspectable public var needToShowAbcButton: Bool = false {
         didSet {
             categoriesBottomView?.needToShowAbcButton = needToShowAbcButton
+        }
+    }
+    
+    @IBInspectable public var needToShowReturnButton: Bool = false {
+        didSet {
+            emojiCollectionView?.needToShowReturnButton = needToShowReturnButton
+            categoriesBottomView?.needToShowDeleteButton = !needToShowReturnButton
         }
     }
     
     // MARK: - Public variables
     
     public weak var delegate: EmojiViewDelegate?
+    
+    public var deleteButton: UIButton? {
+        if keyboardSettings?.needToShowReturnButton ?? false {
+            return emojiCollectionView?.deleteButton
+        } else {
+            return categoriesBottomView?.deleteButton
+        }
+    }
+    
+    public var returnButton: UIButton? {
+        if keyboardSettings?.needToShowReturnButton ?? false {
+            return emojiCollectionView?.returnButton
+        } else {
+            return nil
+        }
+    }
     
     // MARK: - Private variables
     
@@ -176,6 +200,14 @@ extension EmojiView: EmojiCollectionViewDelegate {
         
         categoriesBottomView?.updateCurrentCategory(category)
     }
+    
+    func emojiViewDidPressDeleteButton(_ emojiView: EmojiCollectionView) {
+        delegate?.emojiViewDidPressDeleteBackwardButton(self)
+    }
+    
+    func emojiViewDidPressReturnButton(_ emojiView: EmojiCollectionView) {
+        delegate?.emojiViewDidPressReturnButton(self)
+    }
 }
 
 // MARK: - PageControlBottomViewDelegate
@@ -230,10 +262,12 @@ extension EmojiView {
     }
     
     private func setupEmojiCollectionView() {
-        let emojiCollectionView = EmojiCollectionView.loadFromNib(emojis: emojis)
+        let needToShowReturnButton = keyboardSettings?.needToShowReturnButton ?? self.needToShowReturnButton
+        let emojiCollectionView = EmojiCollectionView.loadFromNib(emojis: emojis, needToShowReturnButton: needToShowReturnButton)
         emojiCollectionView.isShowPopPreview = keyboardSettings?.isShowPopPreview ?? isShowPopPreview
         emojiCollectionView.delegate = self
         emojiCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        emojiCollectionView.buttonsContainer.backgroundColor = backgroundColor
         addSubview(emojiCollectionView)
         
         self.emojiCollectionView = emojiCollectionView
@@ -265,9 +299,11 @@ extension EmojiView {
             _bottomView = bottomView
         } else if bottomType == .categories {
             let needToShowAbcButton = keyboardSettings?.needToShowAbcButton ?? self.needToShowAbcButton
+            let needToShowReturnButton = keyboardSettings?.needToShowReturnButton ?? self.needToShowReturnButton
             let bottomView = CategoriesBottomView.loadFromNib(
                 with: categories,
-                needToShowAbcButton: needToShowAbcButton
+                needToShowAbcButton: needToShowAbcButton,
+                needToShowDeleteButton: !needToShowReturnButton
             )
             bottomView.delegate = self
             self.categoriesBottomView = bottomView

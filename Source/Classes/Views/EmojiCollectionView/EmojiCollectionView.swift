@@ -25,6 +25,8 @@ internal protocol EmojiCollectionViewDelegate: class {
     ///   - emojiView: the emoji view
     func emojiViewDidChangeCategory(_ category: Category, emojiView: EmojiCollectionView)
     
+    func emojiViewDidPressDeleteButton(_ emojiView: EmojiCollectionView)
+    func emojiViewDidPressReturnButton(_ emojiView: EmojiCollectionView)
 }
 
 /// A emoji keyboard view
@@ -41,6 +43,16 @@ internal class EmojiCollectionView: UIView {
     internal var emojis: [EmojiCategory]! {
         didSet {
             collectionView.reloadData()
+        }
+    }
+    
+    internal var needToShowReturnButton: Bool? {
+        didSet {
+            guard let showReturnButton = needToShowReturnButton else {
+                return
+            }
+            
+            buttonsContainer.isHidden = !showReturnButton
         }
     }
     
@@ -65,6 +77,10 @@ internal class EmojiCollectionView: UIView {
         }
     }
     
+    @IBOutlet internal weak var buttonsContainer: UIView!
+    @IBOutlet internal weak var deleteButton: UIButton!
+    @IBOutlet internal weak var returnButton: UIButton!
+    
     // MARK: - Override variables
     
     internal override var intrinsicContentSize: CGSize {
@@ -80,7 +96,7 @@ internal class EmojiCollectionView: UIView {
     
     // MARK: - Init functions
     
-    static func loadFromNib(emojis: [EmojiCategory]) -> EmojiCollectionView {
+    static func loadFromNib(emojis: [EmojiCategory], needToShowReturnButton: Bool) -> EmojiCollectionView {
         let nibName = String(describing: EmojiCollectionView.self)
         
         guard let nib = Bundle.podBundle.loadNibNamed(nibName, owner: nil, options: nil) as? [EmojiCollectionView] else {
@@ -92,6 +108,7 @@ internal class EmojiCollectionView: UIView {
         }
         
         view.emojis = emojis
+        view.needToShowReturnButton = needToShowReturnButton
         view.setupView()
         
         return view
@@ -125,6 +142,16 @@ internal class EmojiCollectionView: UIView {
         
         let indexPath = IndexPath(item: 0, section: section)
         collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction private func deleteBackward() {
+        delegate?.emojiViewDidPressDeleteButton(self)
+    }
+    
+    @IBAction private func returnPress() {
+        delegate?.emojiViewDidPressReturnButton(self)
     }
     
 }
@@ -259,6 +286,9 @@ extension EmojiCollectionView {
         addGestureRecognizer(emojiLongPressGestureRecognizer)
         
         addSubview(emojiPopView)
+        
+        deleteButton.layer.cornerRadius = 4
+        returnButton.layer.cornerRadius = 4
     }
     
     @objc private func emojiLongPressHandle(sender: UILongPressGestureRecognizer) {

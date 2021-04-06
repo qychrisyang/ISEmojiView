@@ -29,4 +29,7 @@ class EmojiKeyboardFromStoryboard: UIViewController, EmojiViewDelegate {
         textView.deleteBackward()
     }
     
+    func emojiViewDidPressReturnButton(_ emojiView: EmojiView) {
+        
+    }
 }

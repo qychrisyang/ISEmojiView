@@ -33,6 +33,17 @@ final internal class CategoriesBottomView: UIView {
         }
     }
     
+    internal var needToShowDeleteButton: Bool? {
+        didSet {
+            guard let showDeleteButton = needToShowDeleteButton else {
+                return
+            }
+            
+            deleteButton.isHidden = !showDeleteButton
+            collectionViewToSuperViewTrailingConstraint.priority = showDeleteButton ? .defaultHigh : .defaultLow
+        }
+    }
+    
     internal var categories: [Category]! {
         didSet {
             collectionView.reloadData()
@@ -45,25 +56,26 @@ final internal class CategoriesBottomView: UIView {
     
     // MARK: - IBOutlets
     
-    @IBOutlet private weak var changeKeyboardButton: UIButton!
-    @IBOutlet private weak var deleteButton: UIButton! {
+    @IBOutlet internal weak var changeKeyboardButton: UIButton!
+    @IBOutlet internal weak var deleteButton: UIButton! {
         didSet {
             let image = UIImage(named: "ic_emojiDelete", in: Bundle.podBundle,compatibleWith: nil)
             deleteButton.setImage(image, for: .normal)
         }
     }
     
-    @IBOutlet private weak var collectionView: UICollectionView! {
+    @IBOutlet internal weak var collectionView: UICollectionView! {
         didSet {
             collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "CategoryCell")
         }
     }
     
     @IBOutlet private var collectionViewToSuperViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private var collectionViewToSuperViewTrailingConstraint: NSLayoutConstraint!
     
     // MARK: - Init functions
     
-    static internal func loadFromNib(with categories: [Category], needToShowAbcButton: Bool) -> CategoriesBottomView {
+    static internal func loadFromNib(with categories: [Category], needToShowAbcButton: Bool, needToShowDeleteButton: Bool) -> CategoriesBottomView {
         let nibName = String(describing: CategoriesBottomView.self)
         
         guard let nib = Bundle.podBundle.loadNibNamed(nibName, owner: nil, options: nil) as? [CategoriesBottomView] else {
@@ -76,9 +88,14 @@ final internal class CategoriesBottomView: UIView {
         
         bottomView.categories = categories
         bottomView.changeKeyboardButton.isHidden = !needToShowAbcButton
+        bottomView.deleteButton.isHidden = !needToShowDeleteButton
         
         if needToShowAbcButton {
             bottomView.collectionViewToSuperViewLeadingConstraint.priority = .defaultHigh
+        }
+        
+        if needToShowDeleteButton {
+            bottomView.collectionViewToSuperViewTrailingConstraint.priority = .defaultHigh
         }
         
         bottomView.selectFirstCell()

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,18 +27,68 @@
                         <outlet property="delegate" destination="iN0-l3-epB" id="vPu-c6-xSI"/>
                     </connections>
                 </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Hb-Cr-1oF">
+                    <rect key="frame" x="235" y="194" width="140" height="42"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lp-Lx-naR">
+                            <rect key="frame" x="12" y="0.0" width="54" height="42"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="54" id="jIY-X1-2yB"/>
+                            </constraints>
+                            <state key="normal" image="ic_delete"/>
+                            <connections>
+                                <action selector="deleteBackward" destination="iN0-l3-epB" eventType="touchUpInside" id="WcE-Gz-H2h"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6i-GZ-EHK">
+                            <rect key="frame" x="74" y="0.0" width="54" height="42"/>
+                            <color key="backgroundColor" red="0.14117647058823529" green="0.70196078431372544" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="54" id="rCT-az-PyF"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" title="Return">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="returnPress" destination="iN0-l3-epB" eventType="touchUpInside" id="Qwd-YV-1Aj"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="T6i-GZ-EHK" secondAttribute="bottom" id="Efp-zD-1DG"/>
+                        <constraint firstItem="T6i-GZ-EHK" firstAttribute="top" secondItem="9Hb-Cr-1oF" secondAttribute="top" id="HQ9-kd-yvl"/>
+                        <constraint firstAttribute="height" constant="42" id="Klt-aq-7ve"/>
+                        <constraint firstAttribute="width" constant="140" id="XAK-Bv-bRv"/>
+                        <constraint firstItem="1lp-Lx-naR" firstAttribute="leading" secondItem="9Hb-Cr-1oF" secondAttribute="leading" constant="12" id="Yb9-0j-VAj"/>
+                        <constraint firstAttribute="trailing" secondItem="T6i-GZ-EHK" secondAttribute="trailing" constant="12" id="cvF-Qv-NmH"/>
+                        <constraint firstAttribute="bottom" secondItem="1lp-Lx-naR" secondAttribute="bottom" id="vs6-RP-LOp"/>
+                        <constraint firstItem="1lp-Lx-naR" firstAttribute="top" secondItem="9Hb-Cr-1oF" secondAttribute="top" id="yyh-fa-cx1"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="yql-CI-KMz" secondAttribute="trailing" id="Egl-8D-QzR"/>
                 <constraint firstItem="yql-CI-KMz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JcB-yS-k6l"/>
+                <constraint firstAttribute="trailing" secondItem="9Hb-Cr-1oF" secondAttribute="trailing" id="OCb-e8-aEh"/>
+                <constraint firstAttribute="bottom" secondItem="9Hb-Cr-1oF" secondAttribute="bottom" id="aLS-Go-EoB"/>
                 <constraint firstItem="yql-CI-KMz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cqD-nm-7oN"/>
                 <constraint firstAttribute="bottom" secondItem="yql-CI-KMz" secondAttribute="bottom" id="zFN-EU-Ke2"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="buttonsContainer" destination="9Hb-Cr-1oF" id="H40-Vh-y7r"/>
                 <outlet property="collectionView" destination="yql-CI-KMz" id="Oe7-X7-hfh"/>
+                <outlet property="deleteButton" destination="1lp-Lx-naR" id="wOM-JR-1Sg"/>
+                <outlet property="returnButton" destination="T6i-GZ-EHK" id="pgQ-Jh-toG"/>
             </connections>
+            <point key="canvasLocation" x="452" y="112"/>
         </view>
     </objects>
+    <resources>
+        <image name="ic_delete" width="20" height="20"/>
+    </resources>
 </document>

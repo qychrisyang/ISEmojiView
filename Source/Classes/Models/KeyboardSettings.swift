@@ -31,6 +31,11 @@ final public class KeyboardSettings {
     /// Default is false.
     public var needToShowAbcButton: Bool = false
     
+    /// Need to show return button
+    /// This button is located in `EmojiCollectionView`.
+    /// Default is false.
+    public var needToShowReturnButton: Bool = false
+    
     // MARK: - Init functions
     
     public init(bottomType: BottomType) {
