@@ -17,7 +17,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="236"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ojr-e4-0rS">
-                        <size key="itemSize" width="45" height="35"/>
+                        <size key="itemSize" width="50" height="40"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -30,24 +30,23 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Hb-Cr-1oF">
                     <rect key="frame" x="235" y="194" width="140" height="42"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lp-Lx-naR">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lp-Lx-naR">
                             <rect key="frame" x="12" y="0.0" width="54" height="42"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="54" id="jIY-X1-2yB"/>
                             </constraints>
-                            <state key="normal" image="ic_delete"/>
+                            <state key="normal" image="ic_emojiDelete"/>
                             <connections>
                                 <action selector="deleteBackward" destination="iN0-l3-epB" eventType="touchUpInside" id="WcE-Gz-H2h"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6i-GZ-EHK">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6i-GZ-EHK">
                             <rect key="frame" x="74" y="0.0" width="54" height="42"/>
                             <color key="backgroundColor" red="0.14117647058823529" green="0.70196078431372544" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="54" id="rCT-az-PyF"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="Return">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
@@ -89,6 +88,6 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_delete" width="20" height="20"/>
+        <image name="ic_emojiDelete" width="24" height="18"/>
     </resources>
 </document>

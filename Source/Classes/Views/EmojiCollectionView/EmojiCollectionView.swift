@@ -224,16 +224,16 @@ extension EmojiCollectionView: UICollectionViewDelegateFlowLayout {
         
         if let recentsEmojis = emojis.first(where: { $0.category == Category.recents }) {
             if (!recentsEmojis.emojis.isEmpty && section != 0) || (recentsEmojis.emojis.isEmpty && section > 1) {
-                inset.left = 15
+                inset.left = 18
             }
         }
         
         if section == 0 {
-            inset.left = 3
+            inset.left = 6
         }
         
         if section == emojis.count - 1 {
-            inset.right = 4
+            inset.right = 6
         }
         
         return inset
@@ -287,12 +287,19 @@ extension EmojiCollectionView {
         
         addSubview(emojiPopView)
         
+        let deleteImage = UIImage(named: "ic_emojiDelete", in: Bundle.podBundle, compatibleWith: nil)?
+            .withRenderingMode(.alwaysOriginal)
+        deleteButton.setImage(deleteImage, for: .normal)
         deleteButton.layer.cornerRadius = 4
         returnButton.layer.cornerRadius = 4
     }
     
     @objc private func emojiLongPressHandle(sender: UILongPressGestureRecognizer) {
         func longPressLocationInEdge(_ location: CGPoint) -> Bool {
+            if !buttonsContainer.isHidden {
+                return !buttonsContainer.frame.contains(location)
+            }
+            
             let edgeRect = collectionView.bounds.inset(by: collectionView.contentInset)
             return edgeRect.contains(location)
         }
